@@ -1,12 +1,8 @@
 import discord
 from discord.ext import commands, tasks
-import threading
 import datetime
 import asyncio
-import time
-utc = datetime.timezone.utc
-t_time = datetime.time(hour=11, minute=19, tzinfo=utc)
-print(t_time, utc)
+from random import randint
 
 from json_data import data, emojis
 
@@ -37,9 +33,12 @@ class RollNinjaBot(commands.Bot):
     
     @tasks.loop(seconds=data["reminder_time"])
     async def reminder(self):
-        channel = self.get_channel(data["channels"]["poligon"]["id"])
+        channel_name = 'artefakt-rpg'
+        #channel_name = 'poligon'
+        channel = self.get_channel(data["channels"][channel_name]["id"])
+        
         if channel:
-            message = await channel.send('Panowie, kiedy sesja?')
+            message = await channel.send(f'# Drodzy gracze! Kiedy możecie w tym tygodniu grać w <@&{data["channels"][channel_name]["role"]}>?')
             await message.add_reaction(emojis["Mon"])
             await message.add_reaction(emojis["Tu"])
             await message.add_reaction(emojis["Wed"])
@@ -48,7 +47,7 @@ class RollNinjaBot(commands.Bot):
             await message.add_reaction(emojis["Sat"])
             await message.add_reaction(emojis["Sun"])
             await message.add_reaction(emojis["x"])
-            await channel.send(" ".join(member.mention for member in channel.members if not member.bot))
+            #await channel.send(" ".join(member.mention for member in channel.members if not member.bot))
         else:
             print('Channel not found')
 
@@ -60,13 +59,43 @@ class RollNinjaBot(commands.Bot):
         next_sunday = datetime.datetime.now() + datetime.timedelta(days=days_until_sunday)
         next_sunday = next_sunday.replace(hour=target_time.hour, minute=target_time.minute)
         remaining_time = int((next_sunday - datetime.datetime.now()).total_seconds())
+        #remaining_time = 1
         await asyncio.sleep(remaining_time)
         await self.wait_until_ready()
-
 
 RollNinja = RollNinjaBot()
        
 @RollNinja.command()
 async def xd(ctx):
-    print('xd')
-    await ctx.send('xds')
+    await ctx.send('Chciałbyś')
+
+@RollNinja.command()
+async def roll(ctx):
+    try:
+        message = ctx.message.content.split(' ')[1]
+        n, k = message.split('k')
+        n, k = int(n) if n else 1, int(k)
+        if n > 200 or k > 1000:
+            raise Exception('No chyba zwariowałeś!')
+        l = [randint(1, k) for _ in range(n)]
+        s = f'Wynik rzutu **{n}k{k}** = {", ".join(str(ll) for ll in l)} | Suma = {sum(l)}'
+        await ctx.send(s)
+    except Exception as e:
+        await ctx.send(f'Co ty wyrabiasz panie??? ({e})')
+
+@RollNinja.command()
+async def r(ctx):
+    await roll(ctx)
+
+@RollNinja.command()
+async def days(ctx):
+    await ctx.send("""
+*Poniedziałek:* :coffee: 
+*Wtorek:* :smile:
+*Środa:* :camel: 
+*Czwartek:* :raised_hands:
+*Piątek:* :tada: 
+*Sobota:* :partying_face: 
+*Niedziela:* :sun_with_face:
+*Nie mogę w tym tygodniu:* :x:
+    """)
