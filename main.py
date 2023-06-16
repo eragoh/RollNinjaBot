@@ -1,22 +1,10 @@
-import discord
-from discord.ext import commands
+import os
+from dotenv import load_dotenv
 
-token = 'token'
+from bot import RollNinja
 
-intents = discord.Intents.default()
+if __name__ == '__main__':
 
-# create instance of bot
-bot = commands.Bot(command_prefix='!', intents=intents)
-
-# bot event on_ready
-@bot.event
-async def on_ready():
-    print(f'We have logged in as {bot.user}')
-
-# command xd
-@bot.command()
-async def xd(ctx):
-    await ctx.send('xd')
-
-# run the bot with your token
-bot.run(token)
+    load_dotenv()
+    token = os.getenv('TOKEN')
+    RollNinja.fight(token)
