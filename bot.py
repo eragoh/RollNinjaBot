@@ -4,7 +4,7 @@ import datetime
 import asyncio
 from random import randint
 
-from json_data import data, emojis
+from json_data import data, emojis, quotes
 
 class RollNinjaBot(commands.Bot):
     
@@ -67,10 +67,14 @@ RollNinja = RollNinjaBot()
        
 @RollNinja.command()
 async def xd(ctx):
-    await ctx.send('Chciałbyś')
+    """Sam zobacz xD"""
+
+    await ctx.send(quotes["xd"][randint(0, len(quotes["xd"]) -1)])
 
 @RollNinja.command()
 async def roll(ctx):
+    """Rzut kośćmi w formacie mkn, np. 10k100"""
+
     try:
         message = ctx.message.content.split(' ')[1]
         n, k = message.split('k')
@@ -78,17 +82,21 @@ async def roll(ctx):
         if n > 200 or k > 1000:
             raise Exception('No chyba zwariowałeś!')
         l = [randint(1, k) for _ in range(n)]
-        s = f'Wynik rzutu **{n}k{k}** = {", ".join(str(ll) for ll in l)} | Suma = {sum(l)}'
+        s = f'Wynik rzutu **{n}k{k}** = {", ".join(str(ll) if ll < 96 and ll > 5 else f"**{ll}**" for ll in l)} | Suma = {sum(l)}'
         await ctx.send(s)
     except Exception as e:
         await ctx.send(f'Co ty wyrabiasz panie??? ({e})')
 
 @RollNinja.command()
 async def r(ctx):
+    """Patrz na !roll"""
+
     await roll(ctx)
 
 @RollNinja.command()
 async def days(ctx):
+    """Opis emotek, które odpowiadają danym dniom tygodnia"""
+
     await ctx.send("""
 *Poniedziałek:* :coffee: 
 *Wtorek:* :smile:
