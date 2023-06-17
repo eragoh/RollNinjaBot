@@ -52,7 +52,7 @@ class RollNinjaBot(commands.Bot):
         next_sunday = datetime.datetime.now() + datetime.timedelta(days=days_until_sunday)
         next_sunday = next_sunday.replace(hour=target_time.hour, minute=target_time.minute)
         remaining_time = int((next_sunday - datetime.datetime.now()).total_seconds())
-        remaining_time = 1
+        #remaining_time = 1
         await asyncio.sleep(remaining_time)
         await self.wait_until_ready()
 
@@ -81,7 +81,7 @@ class RollNinjaBot(commands.Bot):
     async def before_remind_late_players(self):
         t = datetime.datetime.now()
         remaining_time = (59  - t.minute) * 60 + 60 - t.second
-        remaining_time = 5
+        #remaining_time = 5
         await asyncio.sleep(remaining_time)
         await self.wait_until_ready()
 
@@ -164,8 +164,9 @@ async def kiedysesja(ctx):
 
     message_id = RollNinja.check_last_reminder()
     channel = RollNinja.get_channel(data["channels"]["artefakt-rpg"]["id"])
-    message = await channel.fetch_message(int(message_id))
-    if message:
+
+    if message_id:
+        message = await channel.fetch_message(int(message_id))
         days = {}
         for r in message.reactions:
             user_than_can_play = ''
@@ -182,7 +183,9 @@ async def kiedysesja(ctx):
         for key in days:
             if days[key][1] != 0:
                 new_message += f'- {key} - {days[key][0]} ({days[key][1]})\n'
-        await message.reply(new_message)
+        if new_message == '':
+            await message.reply(new_message)    
+        await message.reply('Nie wiadomo kiedy będzie najbliższa sesja, nikt się nie zapisał.')
 
     else:
         await ctx.send('Nie wiadomo kiedy będzie najbliższa sesja')
