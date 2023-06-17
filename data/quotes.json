@@ -4,7 +4,14 @@
         "Nie zamierzam z tobą walczyć, głupcze. Zamierzam cię zabić. - Malus Ciemne Ostrze.",
         "„Myślę, że Rogaty Szczur woli, aby jego dzieci były ślepe, inaczej z pewnością mielibyśmy teraz świat. I wie, że zdradzilibyśmy nawet jego, gdybyśmy mogli. - Genus, łowca głow.",
         "Tak jest zapisane i na Grimnira, niech to się wkrótce stanie.",
-        "Ale ty masz słabą szyję!!?",
+        "Jak można mieć tak słabą szyję?!",
         "'Chciałbyś... Za karę -10 pd' - Zły GM."
+    ],
+    "reminders" : [
+        "[user] widzę że jeszcze nie dałeś znać kiedy możesz grać w tym tygodniu...",
+        "Daj znać kiedy możesz grać [user]!",
+        "[user] zaznacz reakcję kiedy możesz grać! (info o reakcjach w komendzie !days)",
+        "Marszałek chce zniszczyć świat! Daj znać kiedy masz czas go ratować! [user]",
+        "Wnoszę o zaznaczenie kiedy masz czas na Artefakt [user]"
     ]
 }
