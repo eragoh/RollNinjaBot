@@ -66,7 +66,7 @@ class RollNinjaBot(commands.Bot):
         next_sunday = datetime.datetime.now() + datetime.timedelta(days=days_until_sunday)
         next_sunday = next_sunday.replace(hour=target_time.hour, minute=target_time.minute)
         remaining_time = int((next_sunday - datetime.datetime.now()).total_seconds())
-        remaining_time = 1
+        #remaining_time = 1
         logger.info(f"function 'before_reminder' set delay time to: {remaining_time}s")
         await asyncio.sleep(remaining_time)
         await self.wait_until_ready()
@@ -107,7 +107,7 @@ class RollNinjaBot(commands.Bot):
     async def before_remind_late_players(self):
         t = datetime.datetime.now()
         remaining_time = (59  - t.minute) * 60 + 60 - t.second
-        remaining_time = 10
+        #remaining_time = 10
         logger.info(f"function 'before_remind_late_players' set delay time to: {remaining_time}s")
         await asyncio.sleep(remaining_time)
         await self.wait_until_ready()
