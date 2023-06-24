@@ -25,7 +25,10 @@ def db_set_last_message(channel, message):
 
 def db_get_last_message(channel):
     cursor.execute('SELECT last_message from Channels WHERE name = ?', (channel,))
-    return cursor.fetchone()[0]
+    try:
+        return cursor.fetchone()[0]
+    except:
+        return -1
 
 def db_get_quotes(name):
     cursor.execute('SELECT val from Quotes WHERE name = ?', (name,))
