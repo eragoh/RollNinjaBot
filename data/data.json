@@ -2,14 +2,16 @@
     "channels": {
         "artefakt-rpg" : {
             "id" : 927572580989280276,
-            "role" : 854835782211469352
+            "role" : 854835782211469352,
+            "last_message" : 0
         },
-        "poligon" : {
-            "id" : 1054744204896653333,
-            "role" : 1012057344147996743
+        "ulice-erengradu" : {
+            "id" : 1012056804756303982,
+            "role" : 1012057344147996743,
+            "last_message" : 0
         }
     },
-    "guild" :854814715436072980,
-    "reminder_time" : 604800,
-    "reminder_to_reminder_time" : 7200
+    "vguild" :854814715436072980,
+    "vreminder_time" : 604800,
+    "vreminder_to_reminder_time" : 7200
 }
